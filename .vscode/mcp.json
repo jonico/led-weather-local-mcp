@@ -1,0 +1,12 @@
+{
+	"servers": {
+		"led-weather-local": {
+			"type": "stdio",
+			"command": "node",
+			"args": [
+				"/Users/johannesnicolai/led-weather-local-mcp/mcpServer.js"
+			]
+		}
+	},
+	"inputs": []
+}
