@@ -1,0 +1,280 @@
+{
+  "info": {
+    "_postman_id": "c0d04b88-073f-4970-877e-15be861a9c3d",
+    "name": "LED Name Badge Ready For AI Haha",
+    "description": "# ⚠️ CRITICAL WARNING: Special Character Restrictions ⚠️\n\n## 🚨 AI AGENTS & DEVELOPERS: READ THIS FIRST 🚨\n\n**This API has STRICT hardware limitations on special characters!**\n\n### ❌ What WILL NOT WORK:\n- Arbitrary emojis (😀, 🎉, ❤️, etc.)\n- Unicode characters not in the predefined list\n- Special symbols you assume will work\n- **Using unsupported characters WILL CAUSE ERRORS**\n\n### ✅ What WILL WORK:\n- **ONLY** the special characters returned by the `GET /predefined-icons` endpoint\n- Regular alphanumeric text (A-Z, a-z, 0-9)\n\n---\n\n## 🔴 MANDATORY WORKFLOW FOR SPECIAL CHARACTERS 🔴\n\n**You MUST follow this exact sequence:**\n\n1. **STEP 1 (REQUIRED)**: Call `GET /predefined-icons` to retrieve the complete list of supported special characters\n2. **STEP 2**: Review the response and use ONLY those characters\n3. **STEP 3**: Compose your message using regular text + supported special characters\n4. **STEP 4**: Send via `POST /display-text`\n\n**⚠️ NEVER skip Step 1! Do NOT assume any emoji or special character will work without checking the predefined icons list first!**\n\n---\n\n## API Endpoints\n\n### GET /predefined-icons\n**Call this endpoint FIRST before using any special characters!**\n\nRetrieves the complete list of special characters/icons supported by the LED badge hardware. This is the authoritative source for what special characters you can use.\n\n**Response**: Returns an array of supported special characters that are physically programmed into the LED badge device.\n\n### POST /display-text\nSends text to be displayed on the LED badge.\n\n**Accepted Input**:\n- Alphanumeric characters (A-Z, a-z, 0-9)\n- Spaces and basic punctuation\n- **ONLY** special characters from the `/predefined-icons` response\n\n**Important**: Any special character not in the predefined list will cause an error.\n\n---\n\n## Getting Started\n\n1. **First**, call `GET /predefined-icons` to see available special characters\n2. **Then**, compose your message using regular text and (optionally) the supported special characters\n3. **Finally**, send your message via `POST /display-text`\n\n---\n\n## Why These Restrictions Exist\n\nThe LED name badge is a physical hardware device with limited memory. Only specific icons are programmed into the device firmware. The API cannot add new characters - it can only use what's already in the hardware.\n\n**Bottom Line**: Always check `/predefined-icons` first. Don't guess. Don't assume. Check the list.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "41094746",
+    "_collection_link": "https://automotive-demo.postman.co/workspace/4a51c12a-2804-45ad-9e0c-4d5ebc8056f7/collection/41094746-c0d04b88-073f-4970-877e-15be861a9c3d?action=share&source=collection_link&creator=41094746"
+  },
+  "item": [
+    {
+      "name": "Get Predefined Icons",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "d2422b1c-05c6-4b79-987a-de837da683ed",
+            "exec": [
+              "pm.test(\"Response status code is 200\", function () {",
+              "    pm.expect(pm.response.code).to.eql(200);",
+              "});",
+              "",
+              "",
+              "pm.test(\"Response has the correct Content-Type of application/json\", function () {",
+              "    pm.expect(pm.response.headers.get('Content-Type')).to.include(\"application/json\");",
+              "});",
+              "",
+              "",
+              "pm.test(\"Icons is an array with at least one element\", function () {",
+              "    const responseData = pm.response.json();",
+              "    ",
+              "    pm.expect(responseData).to.be.an('object');",
+              "    pm.expect(responseData.icons).to.be.an('array').that.has.lengthOf.at.least(1, \"Icons array should contain at least one element\");",
+              "});",
+              "",
+              "",
+              "pm.test(\"Each icon in the array is a non-empty string\", function () {",
+              "    const responseData = pm.response.json();",
+              "    ",
+              "    pm.expect(responseData).to.have.property('icons').that.is.an('array');",
+              "    responseData.icons.forEach(icon => {",
+              "        pm.expect(icon).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Icon value should not be empty\");",
+              "    });",
+              "});",
+              "",
+              "",
+              "pm.test(\"Response time is less than 200ms\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(200);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "id": "4e1f2a71-4778-4233-8c49-64cc88b84540",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/predefined-icons",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "predefined-icons"
+          ]
+        },
+        "description": "⚠️ **REQUIRED FIRST STEP** - Call this endpoint before using any special characters in your LED badge text.\n\nThis endpoint returns the **ONLY** special characters supported by the LED badge hardware. The badge has a limited set of predefined icons (like :heart:, :happy:, :bicycle:, etc.) that are built into its firmware.\n\n**Important:** No other special characters, emojis, or Unicode symbols will work. Only the icons returned by this endpoint are supported. Attempting to use unsupported characters will cause errors or display incorrectly on the badge."
+      },
+      "response": [
+        {
+          "id": "e3b7194e-3fd4-443f-be24-9a1d902b6d83",
+          "name": "Get Predefined Icons",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5001/predefined-icons",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5001",
+              "path": [
+                "predefined-icons"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Server",
+              "value": "Werkzeug/3.1.3 Python/3.9.6"
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 13 Jun 2025 14:44:41 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Content-Length",
+              "value": "173"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"icons\": [\n        \":ball:\",\n        \":happy:\",\n        \":happy2:\",\n        \":heart:\",\n        \":HEART:\",\n        \":heart2:\",\n        \":HEART2:\",\n        \":fablab:\",\n        \":bicycle:\",\n        \":bicycle_r:\",\n        \":owncloud:\",\n        \":octocat:\",\n        \":smile:\",\n        \":star:\",\n        \":sun:\"\n    ]\n}"
+        }
+      ]
+    },
+    {
+      "name": "Display Text",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "1a2538ce-4e3a-4fcd-988a-333e501a0cd6",
+            "exec": [
+              "pm.test(\"Response status code is 200\", function () {",
+              "    pm.expect(pm.response.code).to.equal(200);",
+              "});",
+              "",
+              "",
+              "pm.test(\"Response Content-Type is application/json\", function () {",
+              "    pm.expect(pm.response.headers.get('Content-Type')).to.include(\"application/json\");",
+              "});",
+              "",
+              "",
+              "pm.test(\"Response has required fields: status and text\", function () {",
+              "    const responseData = pm.response.json();",
+              "    ",
+              "    pm.expect(responseData).to.be.an('object');",
+              "    pm.expect(responseData).to.have.all.keys('status', 'text');",
+              "});",
+              "",
+              "",
+              "pm.test(\"Status must be a non-empty string\", function () {",
+              "    const responseData = pm.response.json();",
+              "    ",
+              "    pm.expect(responseData).to.be.an('object');",
+              "    pm.expect(responseData.status).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Status should not be empty\");",
+              "});",
+              "",
+              "",
+              "pm.test(\"The text must be a non-empty string\", function () {",
+              "    const responseData = pm.response.json();",
+              "    ",
+              "    pm.expect(responseData).to.be.an('object');",
+              "    pm.expect(responseData.text).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {}
+          }
+        }
+      ],
+      "id": "d4d4fe55-7339-481d-bd05-01890543e06f",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \":ball: :happy: :happy2: :heart: :HEART: :heart2: :HEART2: :fablab: :bicycle: :bicycle_r: :owncloud: Hello World!\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/display-text",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "display-text"
+          ]
+        },
+        "description": "Display text on the LED badge. \n\n**⚠️ CRITICAL: Special Character Restrictions**\n\n- **Regular text works fine:** You can use any alphanumeric characters (A-Z, 0-9) and basic punctuation without issues.\n- **Special characters are RESTRICTED:** The LED badge hardware only supports a limited set of predefined icons (like :heart:, :happy:, :bicycle:, etc.).\n- **You MUST call the \"Get Predefined Icons\" endpoint first** to see the complete list of supported special characters.\n- **Using unsupported special characters will cause errors** or display incorrectly on the badge.\n\n**Best Practice:** Always retrieve the predefined icons list before attempting to use any special characters in your text payload."
+      },
+      "response": [
+        {
+          "id": "b8f38ed4-8607-47ea-9776-2c1ca7951fad",
+          "name": "Display Text",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \":ball: :happy: :happy2: :heart: :HEART: :heart2: :HEART2: :fablab: :bicycle: :bicycle_r: :owncloud: Hello World!\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5001/display-text",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5001",
+              "path": [
+                "display-text"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Server",
+              "value": "Werkzeug/3.1.3 Python/3.9.6"
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 13 Jun 2025 15:57:34 GMT"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Content-Length",
+              "value": "157"
+            },
+            {
+              "key": "Connection",
+              "value": "close"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"status\": \"Text displayed on LED\",\n    \"text\": \":ball: :happy: :happy2: :heart: :HEART: :heart2: :HEART2: :fablab: :bicycle: :bicycle_r: :owncloud: Hello World!\"\n}"
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "1a12440c-05e4-40f6-9574-3263e34b5615",
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "id": "28726a13-9a12-41fd-a0dd-8f58894714a3",
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "id": "f172611c-30b9-4e2a-a758-2257962a9206",
+      "key": "baseUrl",
+      "value": "https://a84a2672-11fd-41e3-8f81-5127bca46a38.mock.pstmn.io"
+    }
+  ]
+}
