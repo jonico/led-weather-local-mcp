@@ -1,0 +1,16 @@
+{
+  "workspace": {
+    "id": "4a51c12a-2804-45ad-9e0c-4d5ebc8056f7"
+  },
+  "entities": {
+    "collections": [
+      "../postman/collections/LED Name Badge Ready For AI API.postman_collection.json"
+    ],
+    "environments": [],
+    "specs": [
+      "../postman/specs/LED Name Badge API.yaml"
+    ],
+    "flows": [],
+    "globals": []
+  }
+}

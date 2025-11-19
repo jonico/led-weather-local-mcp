@@ -1,0 +1,43 @@
+openapi: 3.0.0
+info:
+  title: LED Name Badge API
+  version: 1.0.0
+  description: |
+    API for controlling an LED name badge display.
+    Only plain ASCII text and icons from the /icons endpoint are allowed in display_text.
+    All other special characters are rejected.
+paths:
+  /icons:
+    get:
+      summary: Get allowed icon codes
+      responses:
+        '200':
+          description: A list of allowed icon codes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /display_text:
+    post:
+      summary: Display text with restrictions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                display_text:
+                  type: string
+                  description: Text to display on the LED badge. Only plain ASCII text and icons from /icons allowed.
+                  pattern: '^[\x20-\x7E]*$'
+              required:
+                - display_text
+      responses:
+        '200':
+          description: Text displayed successfully
+        '400':
+          description: Invalid characters in display_text
+components: {}
