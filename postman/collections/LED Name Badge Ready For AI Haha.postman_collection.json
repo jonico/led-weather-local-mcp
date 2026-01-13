@@ -1,11 +1,9 @@
 {
   "info": {
     "_postman_id": "c0d04b88-073f-4970-877e-15be861a9c3d",
-    "name": "LED Name Badge Ready For AI Haha",
+    "name": "LED Name Badge Ready For Andreas",
     "description": "# ⚠️ CRITICAL WARNING: Special Character Restrictions ⚠️\n\n## 🚨 AI AGENTS & DEVELOPERS: READ THIS FIRST 🚨\n\n**This API has STRICT hardware limitations on special characters!**\n\n### ❌ What WILL NOT WORK:\n- Arbitrary emojis (😀, 🎉, ❤️, etc.)\n- Unicode characters not in the predefined list\n- Special symbols you assume will work\n- **Using unsupported characters WILL CAUSE ERRORS**\n\n### ✅ What WILL WORK:\n- **ONLY** the special characters returned by the `GET /predefined-icons` endpoint\n- Regular alphanumeric text (A-Z, a-z, 0-9)\n\n---\n\n## 🔴 MANDATORY WORKFLOW FOR SPECIAL CHARACTERS 🔴\n\n**You MUST follow this exact sequence:**\n\n1. **STEP 1 (REQUIRED)**: Call `GET /predefined-icons` to retrieve the complete list of supported special characters\n2. **STEP 2**: Review the response and use ONLY those characters\n3. **STEP 3**: Compose your message using regular text + supported special characters\n4. **STEP 4**: Send via `POST /display-text`\n\n**⚠️ NEVER skip Step 1! Do NOT assume any emoji or special character will work without checking the predefined icons list first!**\n\n---\n\n## API Endpoints\n\n### GET /predefined-icons\n**Call this endpoint FIRST before using any special characters!**\n\nRetrieves the complete list of special characters/icons supported by the LED badge hardware. This is the authoritative source for what special characters you can use.\n\n**Response**: Returns an array of supported special characters that are physically programmed into the LED badge device.\n\n### POST /display-text\nSends text to be displayed on the LED badge.\n\n**Accepted Input**:\n- Alphanumeric characters (A-Z, a-z, 0-9)\n- Spaces and basic punctuation\n- **ONLY** special characters from the `/predefined-icons` response\n\n**Important**: Any special character not in the predefined list will cause an error.\n\n---\n\n## Getting Started\n\n1. **First**, call `GET /predefined-icons` to see available special characters\n2. **Then**, compose your message using regular text and (optionally) the supported special characters\n3. **Finally**, send your message via `POST /display-text`\n\n---\n\n## Why These Restrictions Exist\n\nThe LED name badge is a physical hardware device with limited memory. Only specific icons are programmed into the device firmware. The API cannot add new characters - it can only use what's already in the hardware.\n\n**Bottom Line**: Always check `/predefined-icons` first. Don't guess. Don't assume. Check the list.",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "41094746",
-    "_collection_link": "https://automotive-demo.postman.co/workspace/4a51c12a-2804-45ad-9e0c-4d5ebc8056f7/collection/41094746-c0d04b88-073f-4970-877e-15be861a9c3d?action=share&source=collection_link&creator=41094746"
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
     {
@@ -244,30 +242,6 @@
           "body": "{\n    \"status\": \"Text displayed on LED\",\n    \"text\": \":ball: :happy: :happy2: :heart: :HEART: :heart2: :HEART2: :fablab: :bicycle: :bicycle_r: :owncloud: Hello World!\"\n}"
         }
       ]
-    }
-  ],
-  "event": [
-    {
-      "listen": "prerequest",
-      "script": {
-        "id": "1a12440c-05e4-40f6-9574-3263e34b5615",
-        "type": "text/javascript",
-        "packages": {},
-        "exec": [
-          ""
-        ]
-      }
-    },
-    {
-      "listen": "test",
-      "script": {
-        "id": "28726a13-9a12-41fd-a0dd-8f58894714a3",
-        "type": "text/javascript",
-        "packages": {},
-        "exec": [
-          ""
-        ]
-      }
     }
   ],
   "variable": [
