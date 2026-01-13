@@ -4,7 +4,8 @@
   },
   "entities": {
     "collections": [
-      "../postman/collections/LED Name Badge Ready For AI API.postman_collection.json"
+      "../postman/collections/LED Name Badge Ready For AI API.postman_collection.json",
+      "../postman/collections/LED_Name_Badge_Ready_For_Andreas_Copy.postman_collection.json"
     ],
     "environments": [],
     "specs": [
